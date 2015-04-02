@@ -4,6 +4,7 @@ Created on Wed Apr 01 20:50:51 2015
 
 @author: florian.mueller
 """
+import urllib2
 
 from HTMLParser import HTMLParser
 
@@ -29,13 +30,14 @@ class WikiTableParser(HTMLParser):
             self.tableTrigger = False
             print(data)
             
+# Just a helper call to extract German train stations of category 1 and 2 from wikipedia. 
+#url = "http://de.wikipedia.org/wiki/Liste_der_deutschen_Bahnh%C3%B6fe_der_Kategorie_1"
+url = "http://de.wikipedia.org/wiki/Liste_der_deutschen_Bahnh%C3%B6fe_der_Kategorie_2"
 
-    
-url = "ts_cat2.html"
-htmlFile = open(url, "r")
-htmlText = htmlFile.read()
-htmlFile.close()
+request = urllib2.urlopen(url)
+content = request.read()
+request.close()
 
 parser = WikiTableParser()
-parser.feed(htmlText)
+parser.feed(content)
 parser.close()
